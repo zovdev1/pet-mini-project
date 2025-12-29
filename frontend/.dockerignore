@@ -1,0 +1,14 @@
+**/node_modules
+**/npm-debug.log
+**/git
+**/.vscode
+**/.idea
+**/.DS_Store
+**/*.log
+**/dist
+**/build
+**/.cache
+**/.parcel-cache
+**/.coverage
+**/.nyc_output
+**/.pnpm-store

@@ -1,0 +1,27 @@
+printWidth: 120
+
+# Табуляция
+tabWidth: 2
+useTabs: false
+
+# Кавычки и точки с запятой
+semi: false
+singleQuote: true
+quoteProps: as-needed
+
+# Объекты и массивы
+trailingComma: es5
+bracketSpacing: true
+
+# JSX
+arrowParens: always
+
+# Конец строки
+endOfLine: lf
+
+# Markdown и текст
+proseWrap: preserve
+embeddedLanguageFormatting: auto
+
+# HTML
+htmlWhitespaceSensitivity: css

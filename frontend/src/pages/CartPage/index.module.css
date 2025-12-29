@@ -1,0 +1,47 @@
+
+.container_main {
+  max-width: 1100px;
+  margin-inline: 25px;
+  padding: 0 25px;
+}
+
+.grup_card {
+  display: flex;
+  margin: 14px 0 0 0;
+}
+
+.box_div {
+  width: 100%;
+}
+
+.car_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px 0 0;
+  width: 850px;
+  height: 700px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(242, 229, 48, 1) 0%, rgba(78, 237, 78, 1) 45%, rgba(66, 237, 231, 1) 100%);
+  animation: rotateGradient 5s linear infinite;
+  background-size: 200% 200%;
+}
+
+.price_card {
+  color: #000000;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+
+@keyframes rotateGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

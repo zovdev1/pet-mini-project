@@ -1,0 +1,26 @@
+-- Схема для корзины
+CREATE SCHEMA IF NOT EXISTS cart;
+
+-- Таблица корзин
+CREATE TABLE cart.carts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id) -- Одна корзина на пользователя
+);
+
+-- Таблица элементов корзины
+CREATE TABLE cart.cart_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    cart_id UUID NOT NULL REFERENCES cart.carts(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES catalog.products(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(cart_id, product_id) -- Одна запись на товар в корзине
+);
+
+-- Индексы для производительности
+CREATE INDEX idx_cart_items_cart_id ON cart.cart_items(cart_id);
+CREATE INDEX idx_cart_items_product_id ON cart.cart_items(product_id);
