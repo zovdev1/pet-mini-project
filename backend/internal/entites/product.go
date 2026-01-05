@@ -8,14 +8,14 @@ import (
 )
 
 type Product struct {
-	ID          uuid.UUID `json:"id"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	Price       int       `json:"price"`
-	Quantity    int       `json:"quantity"`
-	UserID      uuid.UUID `json:"user_id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID          uuid.UUID `db:"id" json:"id"`
+	Title       string    `db:"title" json:"title"`
+	Description string    `db:"description" json:"description"`
+	Price       int       `db:"price" json:"price"`
+	Quantity    int       `db:"quantity" json:"quantity"`
+	UserID      uuid.UUID `db:"user_id" json:"user_id"`
+	CreatedAt   time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
 }
 
 func (p Product) Validate() error {

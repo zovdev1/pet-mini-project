@@ -7,10 +7,10 @@ import (
 	auth "github.com/zovdev1/mini-app-project/pkg/jwt"
 )
 
-func NewRouter(app *gin.Engine, u usecase.User, p usecase.Product, j auth.TokenProvider) {
+func NewRouter(app *gin.Engine, u usecase.User, p usecase.Product, b usecase.Basket, j auth.TokenProvider) {
 
 	apiV1Group := app.Group("/api/v1")
 	{
-		v1.NewUser(apiV1Group, u, p, j)
+		v1.NewUser(apiV1Group, u, p, b, j)
 	}
 }

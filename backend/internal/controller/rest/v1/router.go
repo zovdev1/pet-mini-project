@@ -7,10 +7,11 @@ import (
 	auth "github.com/zovdev1/mini-app-project/pkg/jwt"
 )
 
-func NewUser(apiV1Group *gin.RouterGroup, u usecase.User, p usecase.Product, j auth.TokenProvider) {
+func NewUser(apiV1Group *gin.RouterGroup, u usecase.User, p usecase.Product, b usecase.Basket, j auth.TokenProvider) {
 	router := &V1{
 		u: u,
 		p: p,
+		b: b,
 		j: j,
 		v: validator.New(validator.WithRequiredStructEnabled()),
 	}
@@ -27,5 +28,13 @@ func NewUser(apiV1Group *gin.RouterGroup, u usecase.User, p usecase.Product, j a
 		ProductGroup.GET("/", router.GetAllproduct)
 		ProductGroup.GET("/:id", router.GetListById)
 		ProductGroup.DELETE("/:id", router.GinserIdentity, router.DeleteProduct)
+	}
+
+	BasketGroup := apiV1Group.Group("/basket")
+	{
+		BasketGroup.POST("/items", router.GinserIdentity, router.AddItem) //  добавить товар и создать корзину
+		BasketGroup.GET("/all", router.GinserIdentity, router.GetBasket)  // получить корзину
+		// BasketGroup.DELETE("/item/:id")  // удалить по id
+		// BasketGroup.PUT("/basket/items") // изменить количество
 	}
 }

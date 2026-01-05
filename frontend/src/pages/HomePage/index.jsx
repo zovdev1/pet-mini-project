@@ -28,7 +28,7 @@ export const HomePage = () => {
       try {
         setLoading(true)
 
-        const response = await axios.get(`${baseURL}/api/v1/product/?limit=${limit}&offset=0`)
+        const response = await axios.get(`${baseURL}/api/v1/product/?limit=${limit}&offset=0`)        
         const validatedData = productFormSchema.parse(response.data)
           
         setData(validatedData)

@@ -9,6 +9,7 @@ import (
 type V1 struct {
 	u usecase.User
 	p usecase.Product
+	b usecase.Basket
 	j auth.TokenProvider
 	v *validator.Validate
 }

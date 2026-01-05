@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -13,6 +14,7 @@ import (
 	"github.com/zovdev1/mini-app-project/internal/controller/rest"
 	persistent "github.com/zovdev1/mini-app-project/internal/repo/postgresql"
 	redisdb "github.com/zovdev1/mini-app-project/internal/repo/redisDB"
+	"github.com/zovdev1/mini-app-project/internal/usecase/basket"
 	"github.com/zovdev1/mini-app-project/internal/usecase/product"
 	"github.com/zovdev1/mini-app-project/internal/usecase/user"
 	auth "github.com/zovdev1/mini-app-project/pkg/jwt"
@@ -47,6 +49,7 @@ func Run() {
 	})
 
 	if err != nil {
+		fmt.Println(err.Error())
 		log.Fatal(err)
 	}
 
@@ -68,11 +71,14 @@ func Run() {
 	redisProduct := redisdb.NewRedisUseRepo(client)
 	repoUser := persistent.NewUseRepo(config)
 	repoProduct := persistent.NewProductUseRepo(config)
+	repoBasket := persistent.NewBasketUseRepo(config)
+	repoBasketItem := persistent.NewBasketTimeUseRepo(config)
 	authUser := auth.NewTokenJwt(secretKey, Time)
 
 	// UseCase
 	UserUseCase := user.New(repoUser, authUser)
 	ProductUseCase := product.New(repoProduct, redisProduct)
+	BasketUseCase := basket.New(repoBasket, repoBasketItem)
 
 	// rest - api
 	router := gin.New()
@@ -90,7 +96,7 @@ func Run() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	rest.NewRouter(router, UserUseCase, ProductUseCase, authUser)
+	rest.NewRouter(router, UserUseCase, ProductUseCase, BasketUseCase, authUser)
 
 	logger.Info("Listening and serving HTTP", zap.String("port", os.Getenv("PORT")))
 	router.Run(":" + os.Getenv("PORT"))

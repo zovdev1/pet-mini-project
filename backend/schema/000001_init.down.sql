@@ -1,3 +1,8 @@
 
 DROP TABLE IF EXISTS users;
+
 DROP TABLE IF EXISTS products;
+
+DROP TABLE IF EXISTS  baskets;
+
+DROP TABLE IF EXISTS  basket_items;

@@ -17,3 +17,8 @@ type Product interface {
 	GetById(id string) (*entites.Product, error)
 	DELETE(userID, productID string) error
 }
+
+type Basket interface {
+	BasketAdd(idUser uuid.UUID, Product_id uuid.UUID) error
+	BasketGet(idUser uuid.UUID) ([]*entites.BasketItem, error)
+}
