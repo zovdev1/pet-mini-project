@@ -1,5 +1,7 @@
 FROM golang:1.25.1-alpine AS builder
 
+RUN addgroup -S app && adduser -S app -G app
+
 WORKDIR /app
 
 RUN apk add --no-cache git curl
@@ -16,17 +18,26 @@ RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.20.1/
     -o /usr/local/bin/schema && \
     chmod +x /usr/local/bin/schema
 
+RUN chown -R app:app /app
 
+
+# ========= runtime =========
 FROM alpine:3.19
 
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /root/
+RUN addgroup -S app && adduser -S app -G app
+
+WORKDIR /app
 
 COPY --from=builder /app/main ./main
 COPY --from=builder /usr/local/bin/schema /usr/local/bin/
 COPY --from=builder /app/schema ./schema
-COPY .env .
+COPY .env .env
+
+RUN chown -R app:app /app /usr/local/bin/schema
+
+USER app
 
 EXPOSE 8080
 
