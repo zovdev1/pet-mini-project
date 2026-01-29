@@ -22,9 +22,7 @@ func (r *V1) AddItem(c *gin.Context) {
 		return
 	}
 
-	go func() {
-		err = r.b.BasketAdd(idUser, input.Product_id)
-	}()
+	err = r.b.BasketAdd(idUser, input.Product_id)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
