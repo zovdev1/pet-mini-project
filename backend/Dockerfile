@@ -19,6 +19,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 # ========= migrate =========
 FROM alpine:3.20 AS migrate
 
+
 RUN apk add --no-cache curl
 
 WORKDIR /tmp
